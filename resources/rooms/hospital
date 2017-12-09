@@ -1,0 +1,3 @@
+{:desc "You're in the hospital. Here you can increase your health.
+Enter :heal to begin your healing"
+ :exits {:east :start}}
