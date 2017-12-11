@@ -301,6 +301,29 @@
           (str "Wrong.")))))))
 
 
+(defn set-interval 
+	[callback ms]
+		(future (while true (do (Thread/sleep ms) (callback)))))
+
+
+(defn heal 
+	"Healing the character."
+	([]
+	 (if (= (:name @*current-room*) :hospital)
+	   (if (= @*health* 5)
+		 "You're healthy."
+			(dosync
+				(do
+				  (print (apply str (repeat @*health* "♥ ")))					  
+				  	(while (< @*health* 5)
+				  		(set-interval	 
+				  		(do
+				  			(ref-set *health* (+ @*health* 1))
+				  			(print "♥ "))
+				  		1000))
+			  	  (str  "\nDone."))))
+	   (str "You can heal only in the hospital!"))))
+
 ;; Command data
 
 (def commands {"move" move,
@@ -318,7 +341,8 @@
                "hit" hit
                "players" players
                "help" help
-               "buy" buy})
+               "buy" buy
+               "heal" heal})
 
 ;; Command handling
 
