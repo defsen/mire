@@ -301,11 +301,6 @@
           (str "Wrong.")))))))
 
 
-(defn set-interval 
-	[callback ms]
-		(future (while true (do (Thread/sleep ms) (callback)))))
-
-
 (defn heal 
 	"Healing the character."
 	([]
@@ -315,14 +310,12 @@
 			(dosync
 				(do
 				  (print (apply str (repeat @*health* "♥ ")))					  
-				  	(while (< @*health* 5)
-				  		(set-interval	 
+				  	(while (< @*health* 5) 
 				  		(do
 				  			(ref-set *health* (+ @*health* 1))
-				  			(print "♥ "))
-				  		1000))
+				  			(print "♥ ")))
 			  	  (str  "\nDone."))))
-	   (str "You can heal only in the hospital!"))))
+(str "You can heal only in the hospital!"))))
 
 ;; Command data
 
